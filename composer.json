@@ -13,7 +13,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Classdb\\": "vendor\\myclasses\\php-classes\\src"
+            "Classesec\\": "vendor\\myclasses\\php-classes\\src"
         }
     }
 }

@@ -1,6 +1,6 @@
 <?php 
 
-namespace Classdb\DB;
+namespace Classesec\DB;
 
 class Sql {
 

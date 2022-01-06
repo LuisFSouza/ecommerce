@@ -9,12 +9,12 @@ class ComposerStaticInit8b0a0265d448a3ea1db4defa88112a3d
     public static $prefixLengthsPsr4 = array (
         'C' => 
         array (
-            'Classdb\\' => 8,
+            'Classesec\\' => 10,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Classdb\\' => 
+        'Classesec\\' => 
         array (
             0 => __DIR__ . '/..' . '/myclasses/php-classes/src',
         ),
