@@ -4,8 +4,6 @@ namespace Classesec;
 
 use Rain\Tpl;
 
-
-
 class Mailer
 {
     const USERNAME = 'youremail';
