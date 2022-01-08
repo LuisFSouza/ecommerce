@@ -14,7 +14,7 @@ class Model {
         switch ($method)
         {
             case "get":
-                return $this->values[$fieldName];
+                return isset($this->values[$fieldName]) ? $this->values[$fieldName] : NULL;
             break;
             
             case "set":
@@ -27,7 +27,8 @@ class Model {
     {
         foreach ($data as $key=>$value)
         {
-            $this->{"set".$key}($value);
+            echo $this->{"set".$key}($value);
+            
         }
     }
 

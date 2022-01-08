@@ -71,14 +71,14 @@ class User extends Model{
         $sql = new Sql();
         
         $results = $sql->select("call sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array (
-            "desperson" => $this->getdesperson(),
-            "deslogin" =>$this->getdeslogin(),
-            "despassword" =>password_hash($this->getdespassword(), PASSWORD_DEFAULT, [
+            ":desperson" => $this->getdesperson(),
+            ":deslogin" =>$this->getdeslogin(),
+            ":despassword" =>password_hash($this->getdespassword(), PASSWORD_DEFAULT, [
                 "cost"=>12
             ]),
-            "desemail" =>$this->getdesemail(),
-            "nrphone" =>$this->getnrphone(),
-            "inadmin" =>$this->getinadmin()
+            ":desemail" =>$this->getdesemail(),
+            ":nrphone" =>$this->getnrphone(),
+            ":inadmin" =>$this->getinadmin()
         ));
 
         
