@@ -4,8 +4,6 @@ namespace Classesec\Model;
 
 use \Classesec\DB\Sql;
 use \Classesec\Model;
-use Exception;
-use \Classesec\Mailer;
 
 class Category extends Model{
 
