@@ -28,7 +28,6 @@ class Product extends Model{
 
     public static function formatPrice($vlprice)
     {
-        
     }
     
     public function save()
