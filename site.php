@@ -3,6 +3,7 @@
 use \Classesec\Page;
 use \Classesec\Model\Product;
 use \Classesec\Model\Category;
+use \Classesec\Model\Cart;
 
 $app->get('/', function() {
 
@@ -58,6 +59,16 @@ $app->get('/products/:desurl', function($desurl) {
 		"product"=>$product->getValues(),
 		"categories"=>$product->getCategories()
 	]);
+
+});
+
+$app->get('/cart', function() {
+
+	$cart = Cart::getFromSession();
+
+	$page = new Page();
+
+	$page->setTpl("cart");
 
 });
 
