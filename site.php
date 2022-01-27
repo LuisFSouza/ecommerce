@@ -4,6 +4,8 @@ use \Classesec\Page;
 use \Classesec\Model\Product;
 use \Classesec\Model\Category;
 use \Classesec\Model\Cart;
+use \Classesec\Model\Address;
+use \Classesec\Model\User;
 
 $app->get('/', function() {
 
@@ -138,6 +140,57 @@ $app->post('/cart/freight', function() {
 	header("Location: /cart");
 	exit;
 });
+
+
+$app->get('/checkout', function() {
+
+	User::verifyLogin(false);
+	
+	$cart = Cart::getFromSession();
+
+	$address = new Address();
+
+	$page = new Page();
+
+	$page->setTpl("checkout", [
+		'cart'=>$cart->getValues(),
+		'address'=>$address->getValues()
+	]);
+});
+
+
+$app->get('/login', function() {
+
+	$page = new Page();
+
+	$page->setTpl("login", [
+		'error'=> User::getMsgError()
+	]);
+});
+
+$app->post('/login', function() {
+	
+	try{
+		User::login($_POST['login'], $_POST['password']);
+	}
+	catch(Exception $e)
+	{
+		User::setMsgError($e-> getMessage());
+	}
+	header("Location: /checkout");
+	exit;
+});
+
+$app->get('/logout', function() {
+	
+	User::logout();
+
+	header("Location: /login");
+	exit;
+});
+
+
+
 
 
 

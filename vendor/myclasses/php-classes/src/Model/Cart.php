@@ -213,14 +213,18 @@ class Cart extends Model{
         }
         else
         {
-
+            $this->setnrdays(0);
+            $this->setvlfreight(0);
+            $this->setdeszipcode($nrzipcode);
+ 
+            $this->save();
         }
     }
 
     public static function formatValueToDecimal($value):float
     {
-        $value = str_replace('.', '', $value);
-        return str_replace(',', '.', $value);
+            $value = str_replace('.', '', $value);
+            return str_replace(',', '.', $value);
     }
 
     public static function setMsgError($msg)
