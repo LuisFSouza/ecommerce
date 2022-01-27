@@ -132,11 +132,11 @@ class User extends Model{
     {
         $sql = new Sql();
 
-        $results = $sql->select("select * from tb_users a inner join tb_persons b using(idperson) where a.iduser = :iduser", array(
+        $results = $sql->select("select * from tb_users a inner join tb_persons b using(idperson) where a.iduser = :iduser", [
             ":iduser"=>$iduser
-        ));
+        ]);
 
-        $results['desperson'] = utf8_encode($results['desperson']);
+        $results[0]['desperson'] = utf8_encode($results[0]['desperson']);
 
         $this->setData($results[0]);
     }
@@ -168,7 +168,7 @@ class User extends Model{
         ));
     }
 
-    public static function getForgot($email)
+    public static function getForgot($email, $inadmin = true)
     {
         $sql = new Sql();
         
@@ -199,8 +199,16 @@ class User extends Model{
 
                 $code = openssl_encrypt($dataRecovery['idrecovery'], 'AES-128-CBC', pack("a16", User::SECRET), 0, pack("a16", User::SECRET_IV));
                 $result = base64_encode($code);
+                
+                if($inadmin === true)
+                {
+                    $link = "http://www.myecommercephpcourse.com.br/admin/forgot/reset?code=$result";
+                }
+                else
+                {
+                    $link = "http://www.myecommercephpcourse.com.br/forgot/reset?code=$result";
+                }
                
-                $link = "http://www.myecommercephpcourse.com.br/admin/forgot/reset?code=$result";
 
                 $mailer = new Mailer($data['desemail'], $data['desperson'], "Redefinir senha da UFF Store", "forgot", array(
                     "name"=>$data['desperson'],
