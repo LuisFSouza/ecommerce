@@ -87,7 +87,7 @@ $app->post('/admin/users/:iduser', function($iduser) {
 	
 	$user->setData($_POST);
 
-	$user->update();
+	$user->update(false);
 
 	header("Location: /admin/users");
 	exit;

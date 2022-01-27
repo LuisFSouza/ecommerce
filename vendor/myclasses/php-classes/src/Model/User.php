@@ -13,6 +13,7 @@ class User extends Model{
     const SECRET_IV = "cursophp7_Secret_IV";
     const ERROR = "UserError";
     const ERROR_REGISTER = "UserErrorRegister";
+    const SUCCESS = "UserSuccess";
     
     public static function getFromSession()
     {   
@@ -52,7 +53,7 @@ class User extends Model{
     {
         $sql = new Sql();
 
-        $results = $sql->select("select a.*, b.desperson from tb_users a inner join tb_persons b on a.idperson = b.idperson where a.deslogin = :LOGIN", array(
+        $results = $sql->select("select * from tb_users a inner join tb_persons b on a.idperson = b.idperson where a.deslogin = :LOGIN", array(
             ":LOGIN"=>$login
         ));
         
@@ -141,15 +142,24 @@ class User extends Model{
         $this->setData($results[0]);
     }
 
-    public function update()
+    public function update($passwordHash = true)
     {
         $sql = new Sql();
+
+        if($passwordHash)
+        {
+            $password = User::getPasswordHash($this->getdespassword());
+        }
+        else
+        {
+            $password = $this->getdespassword();
+        }
         
         $results = $sql->select("call sp_usersupdate_save(:iduser, :desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array (
             "iduser" => $this->getiduser(),
             "desperson" => utf8_decode($this->getdesperson()),
             "deslogin" =>$this->getdeslogin(),
-            "despassword" =>User::getPasswordHash($this->getdespassword()),
+            "despassword" => $password,
             "desemail" =>$this->getdesemail(),
             "nrphone" =>$this->getnrphone(),
             "inadmin" =>$this->getinadmin()
@@ -314,5 +324,24 @@ class User extends Model{
 
         return (count($results) > 0);
     }
+
+    public static function setSuccess($msg)
+    {
+        $_SESSION[User::SUCCESS] = $msg;
+    }
+
+    public static function getSuccess()
+    {
+
+       $msg = isset($_SESSION[User::SUCCESS]) && $_SESSION[User::SUCCESS] ? $_SESSION[User::SUCCESS] : "";
+       User::clearSuccess();
+       return $msg;
+    }
+
+    public static function clearSuccess()
+    {
+        $_SESSION[User::SUCCESS] = null;
+    }
+
 }
 
