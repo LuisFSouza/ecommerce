@@ -12,6 +12,7 @@ class User extends Model{
     const SECRET = "cursophp7_secret";
     const SECRET_IV = "cursophp7_Secret_IV";
     const ERROR = "UserError";
+    const ERROR_REGISTER = "UserErrorRegister";
     
     public static function getFromSession()
     {   
@@ -117,7 +118,7 @@ class User extends Model{
         $results = $sql->select("call sp_users_save(:desperson, :deslogin, :despassword, :desemail, :nrphone, :inadmin)", array (
             ":desperson" => utf8_decode($this->getdesperson()),
             ":deslogin" =>$this->getdeslogin(),
-            ":despassword" =>User::getPasswordHash($this->getdespassword),
+            ":despassword" =>User::getPasswordHash($this->getdespassword()),
             ":desemail" =>$this->getdesemail(),
             ":nrphone" =>$this->getnrphone(),
             ":inadmin" =>$this->getinadmin()
@@ -277,5 +278,33 @@ class User extends Model{
         ]);
     }
 
+    public static function setErrorRegister($msg)
+    {
+        $_SESSION[User::ERROR_REGISTER] = $msg;
+    }
+
+    public static function getErrorRegister()
+    {
+
+       $msg = isset($_SESSION[User::ERROR_REGISTER]) && $_SESSION[User::ERROR_REGISTER] ? $_SESSION[User::ERROR_REGISTER] : "";
+       User::clearErrorRegister();
+       return $msg;
+    }
+
+    public static function clearErrorRegister()
+    {
+        $_SESSION[User::ERROR_REGISTER] = null;
+    }
+
+    public static function checkLoginExists($login)
+    {
+        $sql = new Sql();
+        
+        $results = $sql->select("select * from tb_users where deslogin = :deslogin", [
+            ':deslogin'=>$login
+        ]);
+
+        return (count($results) > 0);
+    }
 }
 
