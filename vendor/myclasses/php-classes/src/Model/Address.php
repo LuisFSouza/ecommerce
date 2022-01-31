@@ -52,11 +52,11 @@ class Address extends Model{
       $results = $sql->select("call sp_addresses_save(:idaddress, :idperson, :desaddress, :descomplement, :descity, :desstate, :descounty, :deszipcode, :desdistrict)", [
           ':idaddress'=> $this->getidaddress(),
           ':idperson'=> $this->getidperson(),
-          ':desaddress'=> utf8_decode($this->getdesaddress()),
+          ':desaddress'=> $this->getdesaddress(),
           ':descomplement'=> $this->getdescomplement(),
-          ':descity'=> utf8_decode($this->getdescity()),
-          ':desstate'=> utf8_decode($this->getdesstate()),
-          ':descounty'=> utf8_decode($this->getdescountry()),
+          ':descity'=> $this->getdescity(),
+          ':desstate'=> $this->getdesstate(),
+          ':descounty'=> $this->getdescountry(),
           ':deszipcode'=> $this->getdeszipcode(),
           ':desdistrict'=> $this->getdesdistrict()
       ]);
