@@ -129,7 +129,7 @@ class Category extends Model{
         $resultTotal = $sql->select("select found_rows() as nrtotal");
 
         return [
-            'data'=>Product::checkList($results),
+            'data'=>$results,
             'total'=>(int)$resultTotal[0]["nrtotal"],
             'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
         ];
@@ -147,7 +147,7 @@ class Category extends Model{
         $resultTotal = $sql->select("select found_rows() as nrtotal");
 
         return [
-            'data'=>Product::checkList($results),
+            'data'=>$results,
             'total'=>(int)$resultTotal[0]["nrtotal"],
             'pages'=>ceil($resultTotal[0]["nrtotal"] / $itemsPerPage)
         ];
