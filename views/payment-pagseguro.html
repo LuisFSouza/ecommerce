@@ -1,0 +1,41 @@
+<form method="post"  
+action="https://pagseguro.uol.com.br/v2/checkout/payment.html">  
+          
+        <!-- Campos obrigatórios -->  
+        <input name="receiverEmail" type="hidden" value="suporte@lojamodelo.com.br">  
+        <input name="currency" type="hidden" value="BRL">  
+
+        {loop="$products"}
+        <!-- Itens do pagamento (ao menos um item é obrigatório) -->  
+        <input name="itemId{$counter+1}" type="hidden" value="{$value.idproduct}">  
+        <input name="itemDescription{$counter+1}" type="hidden" value="{$value.desproduct}">  
+        <input name="itemAmount{$counter+1}" type="hidden" value="{$value.vlprice}">  
+        <input name="itemQuantity{$counter+1}" type="hidden" value="{$value.nrqda}">  
+        <input name="itemWeight{$counter+1}" type="hidden" value="{$value.vlweight*1000}"> 
+        <input name="itemShippingCost{$counter+1}" type="hidden" value="{$freight}"> 
+        {/loop}
+
+        <!-- Código de referência do pagamento no seu sistema (opcional) -->  
+        <input name="reference" type="hidden" value="{$order.idorder}">  
+          
+        <!-- Informações de frete (opcionais) -->  
+        <input name="shippingType" type="hidden" value="1">  
+        <input name="shippingAddressPostalCode" type="hidden" value="{$order.deszipcode}">  
+        <input name="shippingAddressStreet" type="hidden" value="{$order.desaddress}">  
+        <input name="shippingAddressNumber" type="hidden" value="{$order.desnumber}">  
+        <input name="shippingAddressComplement" type="hidden" value="{$order.descomplement}">  
+        <input name="shippingAddressDistrict" type="hidden" value="{$order.desdistrict}">  
+        <input name="shippingAddressCity" type="hidden" value="{$order.descity}">  
+        <input name="shippingAddressState" type="hidden" value="{$order.desstate}">  
+        <input name="shippingAddressCountry" type="hidden" value="{$order.descountry}">  
+  
+        <!-- Dados do comprador (opcionais) -->  
+        <input name="senderName" type="hidden" value="{$order.desperson}">  
+        <input name="senderAreaCode" type="hidden" value="{$phone.areaCode}">  
+        <input name="senderPhone" type="hidden" value="{$phone.number}">  
+        <input name="senderEmail" type="hidden" value="{$order.desemail}">   
+</form>  
+
+<script type="text/javascript">
+    document.forms[0].submit()
+</script>

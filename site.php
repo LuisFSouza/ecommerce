@@ -144,10 +144,6 @@ $app->get('/checkout', function () {
 	$cart = Cart::getFromSession();
 
 	if (isset($_GET['zipcode'])) {
-		$_GET['zipcode'] = $cart->getdeszipcode();
-	}
-
-	if (isset($_GET['zipcode'])) {
 
 		$address->loadFromCEP($_GET['zipcode']);
 
@@ -159,6 +155,7 @@ $app->get('/checkout', function () {
 	}
 
 	if (!$address->getdesaddress()) $address->setdesaddress('');
+	if (!$address->getdesnumber()) $address->setdesnumber('');
 	if (!$address->getdescomplement()) $address->setdescomplement('');
 	if (!$address->getdesdistrict()) $address->setdesdistrict('');
 	if (!$address->getdescity()) $address->setdescity('');
@@ -188,6 +185,12 @@ $app->post("/checkout", function () {
 
 	if (!isset($_POST['desaddress']) || $_POST['desaddress'] === '') {
 		Address::setMsgError("Informe o endereço");
+		header('Location: /checkout');
+		exit;
+	}
+
+	if (!isset($_POST['desnumber']) || $_POST['desnumber'] === '') {
+		Address::setMsgError("Informe o número");
 		header('Location: /checkout');
 		exit;
 	}
@@ -243,10 +246,41 @@ $app->post("/checkout", function () {
 
 	$order->save();
 
-	header("Location: /order/" . $order->getidorder());
+	header("Location: /order/" . $order->getidorder(). "/pagseguro");
 	exit;
 });
 
+$app->get("/order/:idorder/pagseguro", function($idorder)
+{
+	User::verifyLogin(false);
+	
+	$order = new Order();
+
+	$order->get((int)$idorder);
+
+	$cart = $order->getCart();
+
+	$productsTotals = $cart->getProductsTotals();
+
+	$freightPerProduct = number_format(($cart->getvlfreight() / $productsTotals["nrqtd"]), 2, '.', '');
+
+	$page = new Page([
+		'header'=>false,
+		'footer'=>false
+	]);
+
+	$page->setTpl("payment-pagseguro", [
+		'order'=>$order->getValues(),
+		'cart'=>$cart->getValues(),
+		'products'=>$cart->getProducts(),
+		'freight'=>$freightPerProduct,
+		'phone'=>[
+			'areaCode'=>substr($order->getnrphone(), 0, 2),
+			'number'=>substr($order->getnrphone(), 2, strlen($order->getnrphone()))
+		]
+	]);
+
+});
 
 $app->get('/login', function () {
 

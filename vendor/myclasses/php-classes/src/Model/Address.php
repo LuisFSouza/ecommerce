@@ -49,10 +49,11 @@ class Address extends Model{
   {
       $sql = new Sql();
 
-      $results = $sql->select("call sp_addresses_save(:idaddress, :idperson, :desaddress, :descomplement, :descity, :desstate, :descounty, :deszipcode, :desdistrict)", [
+      $results = $sql->select("call sp_addresses_save(:idaddress, :idperson, :desaddress, :desnumber, :descomplement, :descity, :desstate, :descounty, :deszipcode, :desdistrict)", [
           ':idaddress'=> $this->getidaddress(),
           ':idperson'=> $this->getidperson(),
           ':desaddress'=> $this->getdesaddress(),
+          ':desnumber'=> $this->getdesnumber(),
           ':descomplement'=> $this->getdescomplement(),
           ':descity'=> $this->getdescity(),
           ':desstate'=> $this->getdesstate(),
