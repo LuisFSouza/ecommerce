@@ -11,9 +11,10 @@ action="https://pagseguro.uol.com.br/v2/checkout/payment.html">
         <input name="itemDescription{$counter+1}" type="hidden" value="{$value.desproduct}">  
         <input name="itemAmount{$counter+1}" type="hidden" value="{$value.vlprice}">  
         <input name="itemQuantity{$counter+1}" type="hidden" value="{$value.nrqda}">  
-        <input name="itemWeight{$counter+1}" type="hidden" value="{$value.vlweight*1000}"> 
-        <input name="itemShippingCost{$counter+1}" type="hidden" value="{$freight}"> 
+        <input name="itemWeight{$counter+1}" type="hidden" value="{$value.vlweight*1000}">  
         {/loop}
+
+        <input name="itemShippingCost1" type="hidden" value="{$order.vlfreight}">
 
         <!-- Código de referência do pagamento no seu sistema (opcional) -->  
         <input name="reference" type="hidden" value="{$order.idorder}">  

@@ -113,6 +113,21 @@
 													</tr>
 												</tfoot>
 											</table>
+
+											<p id="billing_state_field" class="form-row form-row-first address-field validate-state" data-o_class="form-row form-row-first address-field validate-state">
+												<input type="radio" id="method-pagseguro" name="payment-method" value="1" class="input-text " style="float:left; margin:30px;">
+												<label class="" for="billing_state"><img style="height:64px;" src="/resources/site/img/logo-pagseguro.png"></label>
+											</p>
+
+											<p id="billing_state_field" class="form-row form-row-first address-field validate-state" data-o_class="form-row form-row-first address-field validate-state">
+												<input type="radio" checked id="method-paypal" name="payment-method" value="2" class="input-text" style="float:left; margin:30px;">
+												<label class="" for="billing_state"><img style="height:64px;" src="/resources/site/img/logo-paypal.png"></label>
+											</p>
+
+											<p id="billing_state_field" class="form-row form-row-first address-field validate-state" data-o_class="form-row form-row-first address-field validate-state">
+												<input type="radio" id="method-boleto" name="payment-method" value="3" class="input-text " style="float:left; margin-left:30px;margin-right: 30px; ">
+												<label class="" for="billing_state">Boleto</label>
+											</p>
 											<div id="payment">
 												<div class="form-row place-order">
 													<input type="submit" data-value="Place order" value="Continuar" id="place_order" name="woocommerce_checkout_place_order" class="button alt">
